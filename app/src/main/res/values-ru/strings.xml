@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rx Java 2 Test</string>
+    <string name="app_name">Coroutines Test</string>
 
     <string name="navigation_drawer_close">Закрыть навигационную панель</string>
     <string name="navigation_drawer_open">Открыть навигационную панель</string>
