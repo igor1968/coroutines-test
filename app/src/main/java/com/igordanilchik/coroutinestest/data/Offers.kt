@@ -2,7 +2,6 @@ package com.igordanilchik.coroutinestest.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-
 data class Offers(
         @JsonProperty("offers") val offers: List<Offer>
 ) {
@@ -24,3 +23,5 @@ data class Offers(
         )
     }
 }
+
+fun Offers.Offer.getParamByKey(key: String): String? = this.param?.find { it.name == key }?.value

@@ -9,9 +9,10 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.tasks.Tasks
-import kotlinx.coroutines.experimental.channels.Channel
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -27,8 +28,8 @@ class LocationModel(
     companion object {
         private val LOCATION_TIMEOUT_IN_SECONDS = TimeUnit.SECONDS.toMillis(5)
         private val LOCATION_UPDATE_INTERVAL = TimeUnit.SECONDS.toMillis(60)
-        private val SUFFICIENT_ACCURACY = 500f
-        private val MAX_ADDRESSES = 1
+        private const val SUFFICIENT_ACCURACY = 500f
+        private const val MAX_ADDRESSES = 1
     }
 
     private val channel by lazy { Channel<Location>(capacity = Channel.CONFLATED) }
@@ -44,7 +45,7 @@ class LocationModel(
     @SuppressLint("MissingPermission")
     override suspend fun location(): ReceiveChannel<Location> =
             channel.also { channel ->
-                launch {
+                GlobalScope.launch {
                     Timber.d("Last Location produced")
                     channel.send(Tasks.await(fusedLocationProvider.lastLocation))
 

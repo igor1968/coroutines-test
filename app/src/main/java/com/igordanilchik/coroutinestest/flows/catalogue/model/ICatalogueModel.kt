@@ -1,7 +1,7 @@
 package com.igordanilchik.coroutinestest.flows.catalogue.model
 
 import com.igordanilchik.coroutinestest.data.Categories
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
+import kotlinx.coroutines.channels.ReceiveChannel
 
 
 /**

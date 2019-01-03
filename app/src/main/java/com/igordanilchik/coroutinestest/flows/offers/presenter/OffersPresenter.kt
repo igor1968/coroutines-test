@@ -5,9 +5,10 @@ import com.igordanilchik.coroutinestest.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.coroutinestest.data.Offers
 import com.igordanilchik.coroutinestest.flows.offers.model.IOffersModel
 import com.igordanilchik.coroutinestest.flows.offers.view.OffersView
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.channels.consumeEach
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -24,11 +25,11 @@ class OffersPresenter(
         loadData()
     }
 
-    private fun loadData() = launch(UI) {
+    private fun loadData() = GlobalScope.launch(Dispatchers.Main) {
         viewState.showProgress()
 
         Timber.d("request offers UI")
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             try {
                 model.loadOffers().consumeEach {
                     Timber.d("update offers UI")

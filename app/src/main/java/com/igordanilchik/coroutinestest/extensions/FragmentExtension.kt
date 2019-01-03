@@ -1,7 +1,7 @@
 package com.igordanilchik.coroutinestest.extensions
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 fun FragmentActivity.replaceFragment(containerId: Int, fragment: Fragment, addToBackStack: Boolean) {
     val fm = this.supportFragmentManager

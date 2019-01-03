@@ -1,16 +1,16 @@
 package com.igordanilchik.coroutinestest.flows.catalogue.view
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.coroutinestest.R
 import com.igordanilchik.coroutinestest.common.mvp.view.BaseFragment
 import com.igordanilchik.coroutinestest.data.Categories
@@ -49,7 +49,12 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager.VERTICAL
+            )
+        )
     }
 
     override fun onDestroyView() {

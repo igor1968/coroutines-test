@@ -4,9 +4,10 @@ import com.arellomobile.mvp.InjectViewState
 import com.igordanilchik.coroutinestest.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.coroutinestest.flows.location.model.ILocationModel
 import com.igordanilchik.coroutinestest.flows.location.view.LocationView
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.channels.consumeEach
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -29,7 +30,7 @@ class LocationPresenter(
 
     override fun onPermissionsGranted() {
 
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             try {
                 Timber.d("Start consume locations")
                 model.location().consumeEach { location ->

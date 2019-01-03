@@ -1,12 +1,13 @@
 package com.igordanilchik.coroutinestest.extensions
 
-import kotlinx.coroutines.experimental.DefaultDispatcher
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
-import kotlinx.coroutines.experimental.channels.consumeEach
-import kotlinx.coroutines.experimental.channels.produce
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.timeunit.TimeUnit
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.delay
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
 
 /**
  * @author Igor Danilchik
@@ -15,8 +16,8 @@ import kotlin.coroutines.experimental.CoroutineContext
 fun <T> ReceiveChannel<T>.debounce(
         time: Long,
         unit: TimeUnit = TimeUnit.MILLISECONDS,
-        context: CoroutineContext = DefaultDispatcher
-): ReceiveChannel<T> = produce(context) {
+        context: CoroutineContext = Dispatchers.Default
+): ReceiveChannel<T> = GlobalScope.produce(context, 0) {
     var nextTime = 0L
     consumeEach {
         val curTime = System.currentTimeMillis()

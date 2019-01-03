@@ -1,7 +1,7 @@
 package com.igordanilchik.coroutinestest.flows.location.model
 
 import android.location.Location
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
+import kotlinx.coroutines.channels.ReceiveChannel
 
 /**
  * @author Igor Danilchik

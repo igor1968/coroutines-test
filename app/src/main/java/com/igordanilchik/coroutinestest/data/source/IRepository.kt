@@ -2,7 +2,7 @@ package com.igordanilchik.coroutinestest.data.source
 
 import com.igordanilchik.coroutinestest.data.Categories
 import com.igordanilchik.coroutinestest.data.Offers
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
+import kotlinx.coroutines.channels.ReceiveChannel
 
 
 /**

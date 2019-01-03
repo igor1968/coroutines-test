@@ -2,7 +2,7 @@ package com.igordanilchik.coroutinestest.data.source.local
 
 import com.igordanilchik.coroutinestest.data.Categories
 import com.igordanilchik.coroutinestest.data.Offers
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 
 /**
  * @author Igor Danilchik

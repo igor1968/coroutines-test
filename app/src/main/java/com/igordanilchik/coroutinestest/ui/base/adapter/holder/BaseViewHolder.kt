@@ -1,7 +1,7 @@
 package com.igordanilchik.coroutinestest.ui.base.adapter.holder
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
 import com.arellomobile.mvp.MvpDelegate
 

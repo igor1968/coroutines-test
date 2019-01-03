@@ -3,8 +3,8 @@ package com.igordanilchik.coroutinestest.flows.offer.model
 import com.igordanilchik.coroutinestest.data.Offers
 import com.igordanilchik.coroutinestest.data.source.IRepository
 import com.igordanilchik.coroutinestest.extensions.debounce
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
-import kotlinx.coroutines.experimental.channels.map
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.map
 import java.util.concurrent.TimeUnit
 
 /**

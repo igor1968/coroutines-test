@@ -1,14 +1,14 @@
 package com.igordanilchik.coroutinestest.flows.offers.view
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.coroutinestest.R
 import com.igordanilchik.coroutinestest.common.mvp.view.BaseFragment
 import com.igordanilchik.coroutinestest.data.Offers
@@ -37,7 +37,12 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager.VERTICAL
+            )
+        )
     }
 
     override fun onDestroyView() {

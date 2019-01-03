@@ -1,7 +1,7 @@
 package com.igordanilchik.coroutinestest.flows.offer.model
 
 import com.igordanilchik.coroutinestest.data.Offers
-import kotlinx.coroutines.experimental.channels.ReceiveChannel
+import kotlinx.coroutines.channels.ReceiveChannel
 
 /**
  * @author Igor Danilchik

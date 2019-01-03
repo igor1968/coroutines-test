@@ -2,8 +2,8 @@ package com.igordanilchik.coroutinestest.data.source.remote
 
 import com.igordanilchik.coroutinestest.api.ClientApi
 import com.igordanilchik.coroutinestest.dto.inner.Catalogue
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
-import kotlinx.coroutines.experimental.Deferred
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory

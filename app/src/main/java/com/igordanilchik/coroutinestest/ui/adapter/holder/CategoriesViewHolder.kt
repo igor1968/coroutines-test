@@ -1,13 +1,15 @@
 package com.igordanilchik.coroutinestest.ui.adapter.holder
 
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.arellomobile.mvp.MvpDelegate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.igordanilchik.coroutinestest.R
 import com.igordanilchik.coroutinestest.data.Categories
 import com.igordanilchik.coroutinestest.ui.adapter.CategoriesAdapter
@@ -36,13 +38,16 @@ class CategoriesViewHolder(
 
         title.text = item.name
 
+        val options = RequestOptions()
+            .fitCenter()
+            .centerCrop()
+            .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_image_black_24dp))
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+
         Glide.with(itemView.context)
-                .load(item.pictureUrl)
-                .fitCenter()
-                .centerCrop()
-                .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_image_black_24dp))
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(icon)
+            .load(item.pictureUrl)
+            .apply(options)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(icon)
     }
 }

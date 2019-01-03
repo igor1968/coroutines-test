@@ -5,9 +5,8 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -19,12 +18,14 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.igordanilchik.coroutinestest.R
 import com.igordanilchik.coroutinestest.common.mvp.view.BaseFragment
 import com.igordanilchik.coroutinestest.flows.location.builder.LocationModule
 import com.igordanilchik.coroutinestest.flows.location.presenter.LocationPresenter
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -80,7 +81,7 @@ class LocationFragment : BaseFragment(), LocationView {
 
 
     override fun requestPermissions() {
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             try {
                 askPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 //all permissions already granted or just granted
@@ -99,6 +100,7 @@ class LocationFragment : BaseFragment(), LocationView {
             }
         }
     }
+
 
     @SuppressLint("MissingPermission")
     override fun updateMap(location: Location, address: String, zoom: Float?) {

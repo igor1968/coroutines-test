@@ -4,9 +4,10 @@ import com.arellomobile.mvp.InjectViewState
 import com.igordanilchik.coroutinestest.common.mvp.presenter.AppBasePresenter
 import com.igordanilchik.coroutinestest.flows.offer.model.IOfferModel
 import com.igordanilchik.coroutinestest.flows.offer.view.OfferView
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.channels.consumeEach
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -24,11 +25,11 @@ class OfferPresenter(
         loadData()
     }
 
-    private fun loadData() = launch(UI) {
+    private fun loadData() = GlobalScope.launch(Dispatchers.Main) {
         viewState.showProgress()
 
         Timber.d("request offer UI")
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             try {
                 model.loadOffer().consumeEach {
                     Timber.d("update offer UI")

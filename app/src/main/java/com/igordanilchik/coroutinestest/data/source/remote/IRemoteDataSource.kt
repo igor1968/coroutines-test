@@ -1,7 +1,7 @@
 package com.igordanilchik.coroutinestest.data.source.remote
 
 import com.igordanilchik.coroutinestest.dto.inner.Catalogue
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 
 /**
  * @author Igor Danilchik
