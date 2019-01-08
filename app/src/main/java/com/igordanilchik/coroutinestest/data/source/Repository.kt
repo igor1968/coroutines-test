@@ -6,6 +6,7 @@ import com.igordanilchik.coroutinestest.data.source.local.ILocalDataSource
 import com.igordanilchik.coroutinestest.data.source.remote.IRemoteDataSource
 import com.igordanilchik.coroutinestest.dto.ICatalogueMapper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -22,8 +23,9 @@ class Repository(
 ) : IRepository {
 
 
+    @ExperimentalCoroutinesApi
     override suspend fun getCategories(): ReceiveChannel<Categories> =
-        GlobalScope.produce(Dispatchers.Default, capacity = Channel.Factory.CONFLATED, block = {
+        GlobalScope.produce(Dispatchers.Default, capacity = Channel.CONFLATED, block = {
             val local = localDataSource.categories().await()
             if (local.categories.isNotEmpty()) {
                 Timber.d("Produce local")
@@ -37,8 +39,9 @@ class Repository(
         })
 
 
+    @ExperimentalCoroutinesApi
     override suspend fun getOffers(): ReceiveChannel<Offers> =
-        GlobalScope.produce(Dispatchers.Default, capacity = Channel.Factory.CONFLATED, block = {
+        GlobalScope.produce(Dispatchers.Default, capacity = Channel.CONFLATED, block = {
             val local = localDataSource.offers().await()
             if (local.offers.isNotEmpty()) {
                 Timber.d("Produce local")
