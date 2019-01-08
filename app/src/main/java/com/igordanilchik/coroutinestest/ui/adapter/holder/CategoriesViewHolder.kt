@@ -39,8 +39,7 @@ class CategoriesViewHolder(
         title.text = item.name
 
         val options = RequestOptions()
-            .fitCenter()
-            .centerCrop()
+            .circleCrop()
             .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_image_black_24dp))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
 
