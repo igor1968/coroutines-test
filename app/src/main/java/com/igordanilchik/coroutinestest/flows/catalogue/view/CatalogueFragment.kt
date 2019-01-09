@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -96,11 +97,10 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
         emptyStateContainer.visibility = View.GONE
     }
 
-    override fun goToCategory(id: Int) {
-        val bundle = Bundle()
-        bundle.putInt(MainActivity.ARG_CATEGORY_ID, id)
-
-        (activity as ViewContract).goToCategory(bundle)
+    override fun goToCategory(id: Int, name: String) {
+        val directions = CatalogueFragmentDirections.toOffersFragment(name)
+            .setCategoryId(id)
+        view?.findNavController()?.navigate(directions)
     }
 
     @ProvidePresenter

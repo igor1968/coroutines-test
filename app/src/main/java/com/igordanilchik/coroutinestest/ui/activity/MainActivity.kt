@@ -1,25 +1,24 @@
 package com.igordanilchik.coroutinestest.ui.activity
 
 import android.os.Bundle
-import androidx.core.view.GravityCompat
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.navigation.NavigationView
 import com.igordanilchik.coroutinestest.R
 import com.igordanilchik.coroutinestest.app.DaggerApplication
 import com.igordanilchik.coroutinestest.common.di.ApplicationComponent
-import com.igordanilchik.coroutinestest.common.factory.FragmentFactory
-import com.igordanilchik.coroutinestest.extensions.replaceFragment
-import com.igordanilchik.coroutinestest.ui.ViewContract
 
-class MainActivity : AppCompatActivity(), ViewContract {
+class MainActivity : AppCompatActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity(), ViewContract {
     @BindView(R.id.nav_view)
     lateinit var navigationView: NavigationView
 
-    private var onlyMapIsDisplayed: Boolean = false
+    private var mapIsDisplayed: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,40 +38,41 @@ class MainActivity : AppCompatActivity(), ViewContract {
         ButterKnife.bind(this)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeButtonEnabled(true)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
         }
 
         val toggle = ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
+            this,
+            drawer,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
-        navigationView.setNavigationItemSelectedListener { item ->
-            selectDrawerItem(item)
-            true
-        }
+        setupNavigation()
+    }
 
-        savedInstanceState?.let {
-            onlyMapIsDisplayed = it.getBoolean(KEY_ONLY_MAP)
-        } ?: run {
-            val item = navigationView.menu.findItem(R.id.nav_catalogue)
-            selectDrawerItem(item)
+    private fun setupNavigation() {
+        val navController = findNavController(R.id.mainNavigationFragment)
+        navigationView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, drawer)
+        toolbar.setupWithNavController(navController, drawer)
+
+        navController.addOnDestinationChangedListener { _, navDestination, _ ->
+            mapIsDisplayed = navDestination.id == R.id.locationFragment
         }
     }
 
     private fun appComponent(): ApplicationComponent =
-            DaggerApplication[applicationContext].appComponent
+        DaggerApplication[applicationContext].appComponent
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(KEY_ONLY_MAP, onlyMapIsDisplayed)
+        outState.putBoolean(KEY_MAP_DISPLAYED, mapIsDisplayed)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,71 +81,27 @@ class MainActivity : AppCompatActivity(), ViewContract {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-        return when (id) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+        when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
 
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
-            if (onlyMapIsDisplayed) {
+            if (mapIsDisplayed) {
                 finish()
             }
             super.onBackPressed()
         }
     }
 
-    private fun selectDrawerItem(menuItem: MenuItem) {
-        val fragment: Fragment
-
-        when (menuItem.itemId) {
-            R.id.nav_catalogue -> {
-                fragment = FragmentFactory.categories()
-                onlyMapIsDisplayed = false
-            }
-            R.id.nav_location -> {
-                fragment = FragmentFactory.location()
-                onlyMapIsDisplayed = true
-            }
-            else -> {
-                fragment = FragmentFactory.categories()
-                onlyMapIsDisplayed = false
-            }
-        }
-
-        supportFragmentManager.popBackStackImmediate()
-        replaceFragment(R.id.frame_content, fragment, false)
-
-        menuItem.isChecked = true
-        title = menuItem.title
-
-        //drawer.closeDrawers();
-        drawer.closeDrawer(GravityCompat.START)
-    }
-
-    override fun goToCategory(bundle: Bundle) {
-        val fragment = FragmentFactory.offers(bundle)
-        replaceFragment(R.id.frame_content, fragment, true)
-    }
-
-    override fun goToOffer(bundle: Bundle) {
-        val fragment = FragmentFactory.offer(bundle)
-        replaceFragment(R.id.frame_content, fragment, true)
-    }
-
     companion object {
-
-        const val KEY_ONLY_MAP = "KEY_ONLY_MAP"
-        const val ARG_CATEGORY_ID = "ARG_CATEGORY_ID"
-        const val ARG_OFFER_ID = "ARG_OFFER_ID"
+        const val KEY_MAP_DISPLAYED = "KEY_MAP_DISPLAYED"
     }
 }

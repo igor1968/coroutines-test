@@ -52,6 +52,6 @@ class CataloguePresenter(
         loadData()
     }
 
-    override fun onCategoryClicked(category: Categories.Category) = viewState.goToCategory(category.id)
+    override fun onCategoryClicked(category: Categories.Category) = viewState.goToCategory(category.id, category.name)
 
 }

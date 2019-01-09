@@ -2,6 +2,7 @@ package com.igordanilchik.coroutinestest.flows.offers.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +16,6 @@ import com.igordanilchik.coroutinestest.data.Offers
 import com.igordanilchik.coroutinestest.flows.offers.builder.OffersModule
 import com.igordanilchik.coroutinestest.flows.offers.model.OffersSupplier
 import com.igordanilchik.coroutinestest.flows.offers.presenter.OffersPresenter
-import com.igordanilchik.coroutinestest.ui.ViewContract
-import com.igordanilchik.coroutinestest.ui.activity.MainActivity
 import com.igordanilchik.coroutinestest.ui.adapter.OffersAdapter
 
 /**
@@ -75,18 +74,17 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
     }
 
     override fun goToOffer(id: Int) {
-        val bundle = Bundle()
-        bundle.putInt(MainActivity.ARG_OFFER_ID, id)
-
-        (activity as ViewContract).goToOffer(bundle)
+        val directions = OffersFragmentDirections.toOfferFragment().setOfferId(id)
+        view?.findNavController()?.navigate(directions)
     }
 
     @ProvidePresenter
     fun providePresenter(): OffersPresenter {
-        val bundle = arguments ?: Bundle()
-        val supplier = OffersSupplier(id = bundle.getInt(MainActivity.ARG_CATEGORY_ID))
+        val supplier = OffersSupplier(
+            id = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryId } ?: 0,
+            name = arguments?.let { OffersFragmentArgs.fromBundle(it).categoryName }
+        )
 
         return appComponent().plusOffersComponent(OffersModule(supplier)).presenter()
     }
-
 }

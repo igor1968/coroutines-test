@@ -1,6 +1,5 @@
 package com.igordanilchik.coroutinestest.flows.offer.view
 
-import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,7 +20,6 @@ import com.igordanilchik.coroutinestest.data.getParamByKey
 import com.igordanilchik.coroutinestest.flows.offer.builder.OfferModule
 import com.igordanilchik.coroutinestest.flows.offer.model.OfferSupplier
 import com.igordanilchik.coroutinestest.flows.offer.presenter.OfferPresenter
-import com.igordanilchik.coroutinestest.ui.activity.MainActivity
 
 /**
  * @author Igor Danilchik
@@ -85,9 +83,9 @@ class OfferFragment : BaseFragment(), OfferView {
 
     @ProvidePresenter
     fun providePresenter(): OfferPresenter {
-        val bundle = arguments ?: Bundle()
-        val supplier = OfferSupplier(id = bundle.getInt(MainActivity.ARG_OFFER_ID))
+        val supplier = OfferSupplier(id = arguments?.let { OfferFragmentArgs.fromBundle(it).offerId } ?: 0)
 
         return appComponent().plusOfferComponent(OfferModule(supplier)).presenter()
     }
+
 }

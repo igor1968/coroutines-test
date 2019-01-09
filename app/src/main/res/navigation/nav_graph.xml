@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/nav_graph"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:startDestination="@+id/catalogueFragment">
+
+    <fragment
+        android:id="@+id/catalogueFragment"
+        android:name="com.igordanilchik.coroutinestest.flows.catalogue.view.CatalogueFragment">
+        <action
+            android:id="@+id/to_offersFragment"
+            app:destination="@id/offersFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/offersFragment"
+        android:name="com.igordanilchik.coroutinestest.flows.offers.view.OffersFragment">
+        <action
+            android:id="@+id/to_offerFragment"
+            app:destination="@id/offerFragment"/>
+        <argument
+            android:name="categoryId"
+            argType="integer"
+            android:defaultValue="0"/>
+        <argument
+            android:name="categoryName"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/offerFragment"
+        android:name="com.igordanilchik.coroutinestest.flows.offer.view.OfferFragment">
+        <argument
+            android:name="offerId"
+            argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.igordanilchik.coroutinestest.flows.location.view.LocationFragment"
+        android:label="@string/marker_title"/>
+</navigation>

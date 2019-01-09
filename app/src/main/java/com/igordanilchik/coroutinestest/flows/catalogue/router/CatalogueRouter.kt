@@ -8,5 +8,5 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
  */
 @StateStrategyType(OneExecutionStateStrategy::class)
 interface CatalogueRouter {
-    fun goToCategory(id: Int)
+    fun goToCategory(id: Int, name: String)
 }
