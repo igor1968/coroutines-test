@@ -11,5 +11,6 @@
     <string name="address">Адрес:</string>
     <string name="marker_title">Вы здесь!</string>
     <string name="title_for_empty_state">Нет сети</string>
+    <string name="farfor_title">" Фарфор"</string>
 
 </resources>

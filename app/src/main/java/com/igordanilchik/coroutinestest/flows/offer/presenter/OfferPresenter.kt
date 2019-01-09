@@ -6,6 +6,7 @@ import com.igordanilchik.coroutinestest.flows.offer.model.IOfferModel
 import com.igordanilchik.coroutinestest.flows.offer.view.OfferView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -13,6 +14,7 @@ import timber.log.Timber
 /**
  * @author Igor Danilchik
  */
+@ObsoleteCoroutinesApi
 @InjectViewState
 class OfferPresenter(
         private val model: IOfferModel

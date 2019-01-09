@@ -35,6 +35,5 @@
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.igordanilchik.coroutinestest.flows.location.view.LocationFragment"
-        android:label="@string/marker_title"/>
+        android:name="com.igordanilchik.coroutinestest.flows.location.view.LocationFragment"/>
 </navigation>

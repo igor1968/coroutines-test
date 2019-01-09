@@ -1,12 +1,12 @@
 package com.igordanilchik.coroutinestest.flows.catalogue.view
 
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -17,8 +17,6 @@ import com.igordanilchik.coroutinestest.common.mvp.view.BaseFragment
 import com.igordanilchik.coroutinestest.data.Categories
 import com.igordanilchik.coroutinestest.flows.catalogue.builder.CatalogueModule
 import com.igordanilchik.coroutinestest.flows.catalogue.presenter.CataloguePresenter
-import com.igordanilchik.coroutinestest.ui.ViewContract
-import com.igordanilchik.coroutinestest.ui.activity.MainActivity
 import com.igordanilchik.coroutinestest.ui.adapter.CategoriesAdapter
 
 /**
@@ -38,6 +36,8 @@ class CatalogueFragment: BaseFragment(), CatalogueView, CategoriesAdapter.Catego
     lateinit var presenter: CataloguePresenter
 
     override val layoutResID = R.layout.fragment_catalogue
+
+    override val baseTitle = R.string.farfor_title
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -7,6 +7,7 @@ import com.igordanilchik.coroutinestest.flows.catalogue.model.ICatalogueModel
 import com.igordanilchik.coroutinestest.flows.catalogue.view.CatalogueView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -16,6 +17,7 @@ import timber.log.Timber
  * @author Igor Danilchik
  */
 
+@ObsoleteCoroutinesApi
 @InjectViewState
 class CataloguePresenter(
         val model: ICatalogueModel

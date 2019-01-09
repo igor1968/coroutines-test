@@ -45,6 +45,8 @@ class OfferFragment : BaseFragment(), OfferView {
     override val layoutResID = R.layout.fragment_offer
 
     override fun showOffer(offer: Offers.Offer) {
+        setTitle(offer.name)
+
         title.text = offer.name
         price.text = getString(R.string.offer_price, offer.price)
 

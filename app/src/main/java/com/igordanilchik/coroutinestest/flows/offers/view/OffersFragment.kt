@@ -15,6 +15,7 @@ import com.igordanilchik.coroutinestest.common.mvp.view.BaseFragment
 import com.igordanilchik.coroutinestest.data.Offers
 import com.igordanilchik.coroutinestest.flows.offers.builder.OffersModule
 import com.igordanilchik.coroutinestest.flows.offers.model.OffersSupplier
+import com.igordanilchik.coroutinestest.flows.offers.model.Subcategory
 import com.igordanilchik.coroutinestest.flows.offers.presenter.OffersPresenter
 import com.igordanilchik.coroutinestest.ui.adapter.OffersAdapter
 
@@ -52,12 +53,14 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
 
     override fun onOfferClicked(offer: Offers.Offer) = presenter.onOfferClicked(offer)
 
-    override fun showOffers(offers: Offers) {
+    override fun showOffers(subcategory: Subcategory) {
         (recyclerView.adapter as? OffersAdapter)?.apply {
-            appendOrUpdate(offers.offers)
+            appendOrUpdate(subcategory.meals)
         } ?: run {
-            recyclerView.adapter = OffersAdapter(offers, this)
+            recyclerView.adapter = OffersAdapter(subcategory, this)
         }
+
+        subcategory.categoryName?.let { setTitle(it) }
     }
 
     override fun showError(throwable: Throwable) {

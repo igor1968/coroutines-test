@@ -12,4 +12,6 @@
     <string name="marker_title">You are here!</string>
     <string name="title_for_empty_state">No network connection</string>
     <string name="param_name_weight" translatable="false">Вес</string>
+
+    <string name="farfor_title">Farfor</string>
 </resources>

@@ -45,6 +45,8 @@ class LocationFragment : BaseFragment(), LocationView {
 
     override val layoutResID: Int = R.layout.fragment_location
 
+    override val baseTitle: Int? = R.string.marker_title
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()

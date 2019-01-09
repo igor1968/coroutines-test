@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.arellomobile.mvp.MvpAppCompatFragment
@@ -18,6 +19,9 @@ abstract class BaseFragment: MvpAppCompatFragment() {
     private var unbinder: Unbinder? = null
 
     abstract val layoutResID: Int
+
+    @StringRes
+    open val baseTitle: Int? = null
 
     fun appComponent(): ApplicationComponent = DaggerApplication[context].appComponent
 
@@ -40,6 +44,18 @@ abstract class BaseFragment: MvpAppCompatFragment() {
         unbinder?.unbind()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        baseTitle?.let { setTitle(getString(it)) }
+    }
+
+    protected fun setTitle(title: CharSequence) {
+        activity?.apply {
+            if (!isFinishing)
+                setTitle(title)
+        }
+    }
 
 }
 

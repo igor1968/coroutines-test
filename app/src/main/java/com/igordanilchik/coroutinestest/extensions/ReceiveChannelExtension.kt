@@ -1,7 +1,9 @@
 package com.igordanilchik.coroutinestest.extensions
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.channels.produce
@@ -13,6 +15,8 @@ import kotlin.coroutines.CoroutineContext
  * @author Igor Danilchik
  */
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 fun <T> ReceiveChannel<T>.debounce(
         time: Long,
         unit: TimeUnit = TimeUnit.MILLISECONDS,
