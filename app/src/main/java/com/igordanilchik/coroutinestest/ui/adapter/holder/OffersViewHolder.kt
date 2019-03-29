@@ -1,10 +1,7 @@
 package com.igordanilchik.coroutinestest.ui.adapter.holder
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import butterknife.BindView
 import com.arellomobile.mvp.MvpDelegate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,39 +12,30 @@ import com.igordanilchik.coroutinestest.data.Offers
 import com.igordanilchik.coroutinestest.data.getParamByKey
 import com.igordanilchik.coroutinestest.ui.adapter.OffersAdapter
 import com.igordanilchik.coroutinestest.ui.base.adapter.holder.BaseViewHolder
+import kotlinx.android.synthetic.main.offers_item.*
 
 /**
  * @author Igor Danilchik
  */
 class OffersViewHolder(
-        itemView: View,
-        parentDelegate: MvpDelegate<*>?,
-        callback: OffersAdapter.OffersCallback?
+    categoryView: View,
+    parentDelegate: MvpDelegate<*>?,
+    callback: OffersAdapter.OffersCallback?
 ) : BaseViewHolder<Offers.Offer, OffersAdapter.OffersCallback>(
-        itemView,
-        parentDelegate,
-        callback
+    categoryView,
+    parentDelegate,
+    callback
 
 ) {
-
-    @BindView(R.id.offer_name)
-    lateinit var name: TextView
-    @BindView(R.id.offer_image)
-    lateinit var image: ImageView
-    @BindView(R.id.offer_weight)
-    lateinit var weight: TextView
-    @BindView(R.id.offer_price)
-    lateinit var price: TextView
-
 
     override fun render(item: Offers.Offer) {
         itemView.setOnClickListener { callback?.onOfferClicked(item) }
 
-        name.text = item.name
-        itemView.context.resources ?.apply {
-            price.text = getString(R.string.offer_price, item.price)
+        offer_name.text = item.name
+        itemView.context.resources?.apply {
+            offer_price.text = getString(R.string.offer_price, item.price)
             item.getParamByKey(getString(R.string.param_name_weight)).let {
-                weight.text = getString(R.string.offer_weight, it)
+                offer_weight.text = getString(R.string.offer_weight, it)
             }
         }
 
@@ -60,7 +48,7 @@ class OffersViewHolder(
             .load(item.picture)
             .apply(options)
             .transition(DrawableTransitionOptions.withCrossFade())
-            .into(image)
+            .into(offer_image)
     }
 }
 

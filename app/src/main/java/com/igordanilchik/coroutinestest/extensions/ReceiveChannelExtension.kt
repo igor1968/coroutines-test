@@ -29,7 +29,15 @@ fun <T> ReceiveChannel<T>.debounce(
             // not enough time passed from location send
             delay(nextTime - curTime)
             var mostRecent = it
-            while (!isEmpty) { mostRecent = receive() } // take the most recently sent without waiting
+
+            // take the most recently sent without waiting
+            do {
+                val t = receiveOrNull()
+                t?.let { justReceived ->
+                    mostRecent = justReceived
+                }
+            } while (t != null)
+
             nextTime += time // maintain strict time interval between sends
             send(mostRecent)
         } else {

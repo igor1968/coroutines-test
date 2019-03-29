@@ -17,26 +17,22 @@ class LocationModule {
 
     @Provides
     fun presenter(
-            model: ILocationModel
-    ): LocationPresenter = LocationPresenter(
-            model
-    )
+        model: ILocationModel
+    ): LocationPresenter = LocationPresenter(model)
 
     @Provides
     fun model(
-            fusedLocationProvider: FusedLocationProviderClient,
-            geocoder: Geocoder
+        fusedLocationProvider: FusedLocationProviderClient,
+        geocoder: Geocoder
     ): ILocationModel =
-            LocationModel(
-                    fusedLocationProvider,
-                    geocoder
-            )
-
+        LocationModel(
+            fusedLocationProvider,
+            geocoder
+        )
 
     @Provides
     fun fusedLocationProvider(context: Context): FusedLocationProviderClient =
-            FusedLocationProviderClient(context)
-
+        FusedLocationProviderClient(context)
 
     @Provides
     fun provideGeocoder(context: Context): Geocoder = Geocoder(context)

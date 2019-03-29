@@ -1,11 +1,7 @@
 package com.igordanilchik.coroutinestest.flows.offer.view
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
@@ -20,24 +16,12 @@ import com.igordanilchik.coroutinestest.data.getParamByKey
 import com.igordanilchik.coroutinestest.flows.offer.builder.OfferModule
 import com.igordanilchik.coroutinestest.flows.offer.model.OfferSupplier
 import com.igordanilchik.coroutinestest.flows.offer.presenter.OfferPresenter
+import kotlinx.android.synthetic.main.fragment_offer.*
 
 /**
  * @author Igor Danilchik
  */
 class OfferFragment : BaseFragment(), OfferView {
-
-    @BindView(R.id.card_image)
-    lateinit var image: ImageView
-    @BindView(R.id.card_title)
-    lateinit var title: TextView
-    @BindView(R.id.card_price)
-    lateinit var price: TextView
-    @BindView(R.id.card_weight)
-    lateinit var weight: TextView
-    @BindView(R.id.card_description)
-    lateinit var description: TextView
-    @BindView(R.id.linear_layout)
-    lateinit var linearLayout: LinearLayout
 
     @InjectPresenter
     lateinit var presenter: OfferPresenter
@@ -47,11 +31,11 @@ class OfferFragment : BaseFragment(), OfferView {
     override fun showOffer(offer: Offers.Offer) {
         setTitle(offer.name)
 
-        title.text = offer.name
-        price.text = getString(R.string.offer_price, offer.price)
+        card_title.text = offer.name
+        card_price.text = getString(R.string.offer_price, offer.price)
 
         offer.getParamByKey(getString(R.string.param_name_weight)).let {
-            weight.text = getString(R.string.offer_weight, it)
+            card_weight.text = getString(R.string.offer_weight, it)
         }
 
         offer.picture?.let { url ->
@@ -65,11 +49,11 @@ class OfferFragment : BaseFragment(), OfferView {
                     .load(it)
                     .apply(options)
                     .transition(withCrossFade())
-                    .into(image)
+                    .into(card_image)
             }
-        } ?: run { image.visibility = View.GONE }
+        } ?: run { card_image.visibility = View.GONE }
 
-        description.text = offer.description
+        card_description.text = offer.description
     }
 
     override fun showProgress() {
@@ -78,10 +62,9 @@ class OfferFragment : BaseFragment(), OfferView {
     override fun hideProgress() {
     }
 
-    override fun showError(throwable: Throwable) {
-        Snackbar.make(linearLayout, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
+    override fun showError(throwable: Throwable) =
+        Snackbar.make(linear_layout, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
             .show()
-    }
 
     @ProvidePresenter
     fun providePresenter(): OfferPresenter {
@@ -89,5 +72,4 @@ class OfferFragment : BaseFragment(), OfferView {
 
         return appComponent().plusOfferComponent(OfferModule(supplier)).presenter()
     }
-
 }

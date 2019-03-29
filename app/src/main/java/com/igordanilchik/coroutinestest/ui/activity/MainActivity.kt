@@ -5,27 +5,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.google.android.material.navigation.NavigationView
 import com.igordanilchik.coroutinestest.R
 import com.igordanilchik.coroutinestest.app.DaggerApplication
 import com.igordanilchik.coroutinestest.common.di.ApplicationComponent
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-    @BindView(R.id.drawer_layout)
-    lateinit var drawer: DrawerLayout
-    @BindView(R.id.nav_view)
-    lateinit var navigationView: NavigationView
 
     private var mapIsDisplayed: Boolean = false
 
@@ -35,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         appComponent().inject(this)
 
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
 
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -45,12 +34,12 @@ class MainActivity : AppCompatActivity() {
 
         val toggle = ActionBarDrawerToggle(
             this,
-            drawer,
+            drawer_layout,
             toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer.addDrawerListener(toggle)
+        drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
         setupNavigation()
@@ -58,9 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         val navController = findNavController(R.id.mainNavigationFragment)
-        navigationView.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, drawer)
-        toolbar.setupWithNavController(navController, drawer)
+        nav_view.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, drawer_layout)
+        toolbar.setupWithNavController(navController, drawer_layout)
 
         navController.addOnDestinationChangedListener { _, navDestination, _ ->
             mapIsDisplayed = navDestination.id == R.id.locationFragment
@@ -90,16 +79,15 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
 
-    override fun onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
+    override fun onBackPressed() =
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             if (mapIsDisplayed) {
                 finish()
             }
             super.onBackPressed()
         }
-    }
 
     companion object {
         const val KEY_MAP_DISPLAYED = "KEY_MAP_DISPLAYED"

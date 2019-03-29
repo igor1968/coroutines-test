@@ -26,7 +26,7 @@ class Repository(
     @ExperimentalCoroutinesApi
     override suspend fun getCategories(): ReceiveChannel<Categories> =
         GlobalScope.produce(Dispatchers.Default, capacity = Channel.CONFLATED, block = {
-            val local = localDataSource.categories().await()
+            val local = localDataSource.categoriesAsync().await()
             if (local.categories.isNotEmpty()) {
                 Timber.d("Produce local")
                 send(local)
@@ -35,14 +35,14 @@ class Repository(
             Timber.d("Produce remote")
             send(remote)
             Timber.d("Save local")
-            localDataSource.saveCategories(remote)
+            localDataSource.saveCategoriesAsync(remote)
         })
 
 
     @ExperimentalCoroutinesApi
     override suspend fun getOffers(): ReceiveChannel<Offers> =
         GlobalScope.produce(Dispatchers.Default, capacity = Channel.CONFLATED, block = {
-            val local = localDataSource.offers().await()
+            val local = localDataSource.offersAsync().await()
             if (local.offers.isNotEmpty()) {
                 Timber.d("Produce local")
                 send(local)
@@ -51,7 +51,7 @@ class Repository(
             Timber.d("Produce remote")
             send(remote)
             Timber.d("Save local")
-            localDataSource.saveOffers(remote)
+            localDataSource.saveOffersAsync(remote)
         })
 
 }

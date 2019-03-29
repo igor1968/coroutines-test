@@ -16,13 +16,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-
 /**
  * @author Igor Danilchik
  */
 class LocationModel(
-        private val fusedLocationProvider: FusedLocationProviderClient,
-        private val geocoder: Geocoder
+    private val fusedLocationProvider: FusedLocationProviderClient,
+    private val geocoder: Geocoder
 ) : ILocationModel {
 
     companion object {
@@ -34,8 +33,7 @@ class LocationModel(
 
     private val channel by lazy { Channel<Location>(capacity = Channel.CONFLATED) }
 
-
-    private val callback: LocationCallback =  object: LocationCallback() {
+    private val callback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             Timber.d("Location produced")
             channel.offer(result.lastLocation)
@@ -44,19 +42,19 @@ class LocationModel(
 
     @SuppressLint("MissingPermission")
     override suspend fun location(): ReceiveChannel<Location> =
-            channel.also { channel ->
-                GlobalScope.launch {
-                    Timber.d("Last Location produced")
-                    channel.send(Tasks.await(fusedLocationProvider.lastLocation))
+        channel.also { channel ->
+            GlobalScope.launch {
+                Timber.d("Last Location produced")
+                channel.send(Tasks.await(fusedLocationProvider.lastLocation))
 
-                    val req = LocationRequest.create()
-                            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                            .setExpirationDuration(LOCATION_TIMEOUT_IN_SECONDS)
-                            .setInterval(LOCATION_UPDATE_INTERVAL)
+                val req = LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setExpirationDuration(LOCATION_TIMEOUT_IN_SECONDS)
+                    .setInterval(LOCATION_UPDATE_INTERVAL)
 
-                    fusedLocationProvider.requestLocationUpdates(req, callback, Looper.getMainLooper())
-                }
+                fusedLocationProvider.requestLocationUpdates(req, callback, Looper.getMainLooper())
             }
+        }
 //                    .filter { location -> location.accuracy < SUFFICIENT_ACCURACY }
 //                    .debounce(LOCATION_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
 
@@ -98,20 +96,17 @@ class LocationModel(
 //                }, Looper.getMainLooper())
 //            }
 
-
-
     override suspend fun address(location: Location): String =
-            geocoder.getFromLocation(location.latitude, location.longitude, MAX_ADDRESSES).firstOrNull()?.let { address ->
+        geocoder.getFromLocation(location.latitude, location.longitude, MAX_ADDRESSES).firstOrNull()?.let { address ->
 
-                val addressString = StringBuilder()
-                for (i in 0..address.maxAddressLineIndex) {
-                    addressString.append(address.getAddressLine(i)).append(" ")
-                }
-                return@let addressString.toString()
-            } ?: "Address unknown"
+            val addressString = StringBuilder()
+            for (i in 0..address.maxAddressLineIndex) {
+                addressString.append(address.getAddressLine(i)).append(" ")
+            }
+            return@let addressString.toString()
+        } ?: "Address unknown"
 
     override fun dispose() {
         fusedLocationProvider.removeLocationUpdates(callback)
     }
-
 }

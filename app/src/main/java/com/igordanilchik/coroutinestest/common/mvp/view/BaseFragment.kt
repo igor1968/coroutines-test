@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.igordanilchik.coroutinestest.app.DaggerApplication
 import com.igordanilchik.coroutinestest.common.di.ApplicationComponent
@@ -14,9 +12,7 @@ import com.igordanilchik.coroutinestest.common.di.ApplicationComponent
 /**
  * @author Igor Danilchik
  */
-abstract class BaseFragment: MvpAppCompatFragment() {
-
-    private var unbinder: Unbinder? = null
+abstract class BaseFragment : MvpAppCompatFragment() {
 
     abstract val layoutResID: Int
 
@@ -31,18 +27,8 @@ abstract class BaseFragment: MvpAppCompatFragment() {
         appComponent().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(layoutResID, container, false)
-        unbinder = ButterKnife.bind(this, view)
-
-        return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        unbinder?.unbind()
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(layoutResID, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +42,5 @@ abstract class BaseFragment: MvpAppCompatFragment() {
                 setTitle(title)
         }
     }
-
 }
 

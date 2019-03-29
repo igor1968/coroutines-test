@@ -5,8 +5,6 @@ import android.view.View
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.android.material.snackbar.Snackbar
@@ -18,14 +16,12 @@ import com.igordanilchik.coroutinestest.flows.offers.model.OffersSupplier
 import com.igordanilchik.coroutinestest.flows.offers.model.Subcategory
 import com.igordanilchik.coroutinestest.flows.offers.presenter.OffersPresenter
 import com.igordanilchik.coroutinestest.ui.adapter.OffersAdapter
+import kotlinx.android.synthetic.main.fragment_offers.*
 
 /**
  * @author Igor Danilchik
  */
-class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
-
-    @BindView(R.id.offers_recycler_view)
-    lateinit var recyclerView: RecyclerView
+class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback {
 
     @InjectPresenter
     lateinit var presenter: OffersPresenter
@@ -35,9 +31,9 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(
+        offers_recycler_view.setHasFixedSize(true)
+        offers_recycler_view.layoutManager = LinearLayoutManager(activity)
+        offers_recycler_view.addItemDecoration(
             DividerItemDecoration(
                 activity,
                 LinearLayoutManager.VERTICAL
@@ -46,7 +42,7 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
     }
 
     override fun onDestroyView() {
-        recyclerView.adapter = null
+        offers_recycler_view.adapter = null
 
         super.onDestroyView()
     }
@@ -54,26 +50,23 @@ class OffersFragment: BaseFragment(), OffersView, OffersAdapter.OffersCallback {
     override fun onOfferClicked(offer: Offers.Offer) = presenter.onOfferClicked(offer)
 
     override fun showOffers(subcategory: Subcategory) {
-        (recyclerView.adapter as? OffersAdapter)?.apply {
+        (offers_recycler_view.adapter as? OffersAdapter)?.apply {
             appendOrUpdate(subcategory.meals)
         } ?: run {
-            recyclerView.adapter = OffersAdapter(subcategory, this)
+            offers_recycler_view.adapter = OffersAdapter(subcategory, this)
         }
 
         subcategory.categoryName?.let { setTitle(it) }
     }
 
-    override fun showError(throwable: Throwable) {
-        Snackbar.make(recyclerView, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
-                .show()
-    }
+    override fun showError(throwable: Throwable) =
+        Snackbar.make(offers_recycler_view, "Error: " + throwable.message, Snackbar.LENGTH_LONG)
+            .show()
 
     override fun showProgress() {
-
     }
 
     override fun hideProgress() {
-
     }
 
     override fun goToOffer(id: Int) {

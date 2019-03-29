@@ -6,7 +6,6 @@ import com.igordanilchik.coroutinestest.flows.location.model.ILocationModel
 import com.igordanilchik.coroutinestest.flows.location.view.LocationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -14,10 +13,9 @@ import timber.log.Timber
 /**
  * @author Igor Danilchik
  */
-@ObsoleteCoroutinesApi
 @InjectViewState
 class LocationPresenter(
-        private val model: ILocationModel
+    private val model: ILocationModel
 ) : AppBasePresenter<LocationView>(), ILocationPresenter {
 
     override var zoomLevel: Float? = null
@@ -50,5 +48,4 @@ class LocationPresenter(
         super.destroyView(view)
         model.dispose()
     }
-
 }

@@ -8,8 +8,8 @@ import kotlinx.coroutines.Deferred
  * @author Igor Danilchik
  */
 interface ILocalDataSource {
-    suspend fun saveCategories(categories: Categories): Deferred<Unit>
-    suspend fun saveOffers(offers: Offers): Deferred<Unit>
-    suspend fun categories(): Deferred<Categories>
-    suspend fun offers(): Deferred<Offers>
+    suspend fun saveCategoriesAsync(categories: Categories): Deferred<Unit>
+    suspend fun saveOffersAsync(offers: Offers): Deferred<Unit>
+    suspend fun categoriesAsync(): Deferred<Categories>
+    suspend fun offersAsync(): Deferred<Offers>
 }
