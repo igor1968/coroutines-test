@@ -5,32 +5,39 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
-        android:id = "@+id/linear_layout"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/card_image"
+        <LinearLayout
+            android:id="@+id/linear_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/card_title"
-            style="@style/CardView.PrimaryTitle"/>
+            <ImageView
+                android:id="@+id/card_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
 
-        <TextView
-            android:id="@+id/card_price"
-            style="@style/CardView.Subtext"/>
+            <TextView
+                android:id="@+id/card_title"
+                style="@style/CardView.PrimaryTitle"/>
 
-        <TextView
-            android:id="@+id/card_weight"
-            style="@style/CardView.Subtext"/>
+            <TextView
+                android:id="@+id/card_price"
+                style="@style/CardView.Subtext"/>
 
-        <TextView
-            android:id="@+id/card_description"
-            style="@style/CardView.SupportingText"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/card_weight"
+                style="@style/CardView.Subtext"/>
+
+            <TextView
+                android:id="@+id/card_description"
+                style="@style/CardView.SupportingText"/>
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </ScrollView>

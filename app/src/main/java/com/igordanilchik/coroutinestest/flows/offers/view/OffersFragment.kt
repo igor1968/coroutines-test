@@ -64,9 +64,11 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
             .show()
 
     override fun showProgress() {
+        swipe_container.post { swipe_container.isRefreshing = true }
     }
 
     override fun hideProgress() {
+        swipe_container.post { swipe_container.isRefreshing = false }
     }
 
     override fun goToOffer(id: Int) {
