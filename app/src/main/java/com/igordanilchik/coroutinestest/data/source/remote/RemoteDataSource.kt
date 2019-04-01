@@ -11,21 +11,17 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 /**
  * @author Igor Danilchik
  */
-class RemoteDataSource(httpClient: OkHttpClient): IRemoteDataSource {
+class RemoteDataSource(httpClient: OkHttpClient) : IRemoteDataSource {
 
     private val restApi: ClientApi =
-            Retrofit.Builder()
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                    .addConverterFactory(SimpleXmlConverterFactory.create())
-                    .baseUrl(ClientApi.API_BASE_URL)
-                    .client(httpClient)
-                    .build()
-                    .create(ClientApi::class.java)
+        Retrofit.Builder()
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .baseUrl(ClientApi.API_BASE_URL)
+            .client(httpClient)
+            .build()
+            .create(ClientApi::class.java)
 
-
-    override suspend fun catalogue(): Deferred<Catalogue> =
-            restApi.loadCatalogue(ClientApi.API_KEY)
-
-
-
+    override suspend fun catalogueAsync(): Deferred<Catalogue> =
+        restApi.loadCatalogueAsync(ClientApi.API_KEY)
 }

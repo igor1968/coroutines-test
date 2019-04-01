@@ -1,5 +1,6 @@
 package com.igordanilchik.coroutinestest.flows.offer.view
 
+import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -27,6 +28,18 @@ class OfferFragment : BaseFragment(), OfferView {
     lateinit var presenter: OfferPresenter
 
     override val layoutResID = R.layout.fragment_offer
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        swipe_container.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+        swipe_container.isEnabled = false
+    }
 
     override fun showOffer(offer: Offers.Offer) {
         setTitle(offer.name)

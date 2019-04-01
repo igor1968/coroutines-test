@@ -31,7 +31,7 @@ class Repository(
                 Timber.d("Produce local")
                 send(local)
             }
-            val remote = mapper.mapToCategories(remoteDataSource.catalogue().await())
+            val remote = mapper.mapToCategories(remoteDataSource.catalogueAsync().await())
             Timber.d("Produce remote")
             send(remote)
             Timber.d("Save local")
@@ -47,7 +47,7 @@ class Repository(
                 Timber.d("Produce local")
                 send(local)
             }
-            val remote = mapper.mapToOffers(remoteDataSource.catalogue().await())
+            val remote = mapper.mapToOffers(remoteDataSource.catalogueAsync().await())
             Timber.d("Produce remote")
             send(remote)
             Timber.d("Save local")

@@ -31,6 +31,14 @@ class OffersFragment : BaseFragment(), OffersView, OffersAdapter.OffersCallback 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        swipe_container.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+        swipe_container.isEnabled = false
+
         offers_recycler_view.setHasFixedSize(true)
         offers_recycler_view.layoutManager = LinearLayoutManager(activity)
         offers_recycler_view.addItemDecoration(

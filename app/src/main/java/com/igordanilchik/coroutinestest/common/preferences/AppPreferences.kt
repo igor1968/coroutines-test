@@ -3,7 +3,8 @@ package com.igordanilchik.coroutinestest.common.preferences
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
 import timber.log.Timber
-import java.util.*
+import java.util.ArrayList
+import java.util.HashSet
 
 /**
  * @author Igor Danilchik
@@ -58,7 +59,7 @@ class AppPreferences(
             val result = ArrayList<T>()
 
             for (key in getAllKeys(prefix)) {
-                getJSON<T>(key, clazz) ?.let { result.add(it) }
+                getJSON(key, clazz) ?.let { result.add(it) }
             }
 
             return result

@@ -7,5 +7,5 @@ import kotlinx.coroutines.Deferred
  * @author Igor Danilchik
  */
 interface IRemoteDataSource {
-    suspend fun catalogue(): Deferred<Catalogue>
+    suspend fun catalogueAsync(): Deferred<Catalogue>
 }
